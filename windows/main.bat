@@ -43,13 +43,13 @@ goto:EOF
 echo Enabling firewall..
 netsh advfirewall set allprofiles state on
 echo Setting basic firewall rules..
-netsh advfirewall firewall set rule name="Remote Assistance (DCOM-In)" new enable=no 
-netsh advfirewall firewall set rule name="Remote Assistance (PNRP-In)" new enable=no 
-netsh advfirewall firewall set rule name="Remote Assistance (RA Server TCP-In)" new enable=no 
-netsh advfirewall firewall set rule name="Remote Assistance (SSDP TCP-In)" new enable=no 
-netsh advfirewall firewall set rule name="Remote Assistance (SSDP UDP-In)" new enable=no 
-netsh advfirewall firewall set rule name="Remote Assistance (TCP-In)" new enable=no 
-netsh advfirewall firewall set rule name="Telnet Server" new enable=no 
+netsh advfirewall firewall set rule name="Remote Assistance (DCOM-In)" new enable=no
+netsh advfirewall firewall set rule name="Remote Assistance (PNRP-In)" new enable=no
+netsh advfirewall firewall set rule name="Remote Assistance (RA Server TCP-In)" new enable=no
+netsh advfirewall firewall set rule name="Remote Assistance (SSDP TCP-In)" new enable=no
+netsh advfirewall firewall set rule name="Remote Assistance (SSDP UDP-In)" new enable=no
+netsh advfirewall firewall set rule name="Remote Assistance (TCP-In)" new enable=no
+netsh advfirewall firewall set rule name="Telnet Server" new enable=no
 netsh advfirewall firewall set rule name="netcat" new enable=no
 echo Set basic firewall rules
 goto:EOF
@@ -57,7 +57,7 @@ goto:EOF
 :lsp
 echo Setting password policy...
 ::Set account lockout to 5, min length to 8, max age to 30, min age to 1, and history to 5
-net accounts /lockoutthreshold:5 /MINPWLEN:8 /MAXPWAGE:30 /MINPWAGE:1 /UNIQUEPW:5 
+net accounts /lockoutthreshold:5 /MINPWLEN:8 /MAXPWAGE:30 /MINPWAGE:1 /UNIQUEPW:5
 echo Set password policy: Password policy must meet complexity to enable
 echo Set password policy: Store passwords using reversible encryption to disabled
 start secpol.msc /wait
@@ -79,7 +79,7 @@ if exist C:\Windows\System32\ntrights.exe (
 	echo Installation succeeded, managing user rights..
 	set remove=("Backup Operators" "Everyone" "Power Users" "Users" "NETWORK SERVICE" "LOCAL SERVICE" "Remote Desktop User" "ANONOYMOUS LOGON" "Guest" "Performance Log Users")
 	for %%a in (%remove%) do (
-			ntrights -U %%a -R SeNetworkLogonRight 
+			ntrights -U %%a -R SeNetworkLogonRight
 			ntrights -U %%a -R SeIncreaseQuotaPrivilege
 			ntrights -U %%a -R SeInteractiveLogonRight
 			ntrights -U %%a -R SeRemoteInteractiveLogonRight
@@ -166,7 +166,7 @@ reg ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v Allocate
 reg ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoAdminLogon /t REG_DWORD /d 0 /f
 ::Clear page file (Will take longer to shutdown)
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v ClearPageFileAtShutdown /t REG_DWORD /d 1 /f
-::Prevent users from installing printer drivers 
+::Prevent users from installing printer drivers
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers" /v AddPrinterDrivers /t REG_DWORD /d 1 /f
 ::Add auditing to Lsass.exe
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\LSASS.exe" /v AuditLevel /t REG_DWORD /d 00000008 /f
@@ -307,9 +307,9 @@ echo Renamed Administrator to "Dude" and Guest to "LameDude"
 goto:EOF
 
 :passwords
-echo Making passwords expire, and setting password to: CyberPatriot1
+echo Making passwords expire, and setting password to: zaq1@WSXzaq1@WSX
 for /f "tokens=*" %%a in ('type %path%resources\users.txt') do (
-	net user "%%a" "CyberPatriot1"
+	net user "%%a" "zaq1@WSXzaq1@WSX"
 	C:\Windows\System32\wbem\wmic UserAccount where Name="%%a" set PasswordExpires=True
 )
 echo Made passwords expire, and set passwords
@@ -355,7 +355,7 @@ if exist "%path%installers\malwarebytes.exe" (
 	goto installMalwarebytesChecked
 ) else echo Couldn't find installer in: "%path%installers\malwarebytes.exe"
 goto:EOF
-	
+
 :installMalwarebytesChecked
 set /p chk="Install Malwarebytes? (y/n) "
 if %chk%==y (
@@ -424,7 +424,7 @@ if exist "%path%installers\MB-Anti-rootkit.exe" (
 	goto installMBAntiChecked
 ) else echo Couldn't find installer in: "%path%installers\MB-Anti-rootkit.exe"
 goto:EOF
-	
+
 :installMBAntiChecked
 set /p chk="Install MBAntiRootkit? (y/n) "
 if %chk%==y (
